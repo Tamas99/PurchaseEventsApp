@@ -1,0 +1,2 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1681972213870,230,HTTP Request,201,Created,RestApi 1-1,text,true,,395,460,1,1,http://localhost:8010/purchase,230,0,23
