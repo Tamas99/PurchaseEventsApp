@@ -15,9 +15,9 @@
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">1</stringProp>
+          <stringProp name="LoopController.loops">5</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.num_threads">1000</stringProp>
         <stringProp name="ThreadGroup.ramp_time">0</stringProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration"></stringProp>
@@ -30,7 +30,7 @@
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">localhost</stringProp>
+          <stringProp name="HTTPSampler.domain">20.126.213.0</stringProp>
           <stringProp name="HTTPSampler.port">8010</stringProp>
           <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
@@ -68,8 +68,8 @@
           <stringProp name="HTTPSampler.port"></stringProp>
           <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/purchase</stringProp>
-          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <stringProp name="HTTPSampler.path">/hello</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -82,7 +82,7 @@
           <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
             <stringProp name="delimiter">,</stringProp>
             <stringProp name="fileEncoding"></stringProp>
-            <stringProp name="filename">C:/Users/Ballai.Tamas/Documents/Mesteri/Diss/WeatherApp/people-100000.csv</stringProp>
+            <stringProp name="filename">C:/Users/Ballai.Tamas/Documents/Mesteri/Diss/PurchaseEventsApp/house-purchase-data/people-100000.csv</stringProp>
             <boolProp name="ignoreFirstLine">false</boolProp>
             <boolProp name="quotedData">false</boolProp>
             <boolProp name="recycle">true</boolProp>
@@ -92,7 +92,7 @@
           </CSVDataSet>
           <hashTree/>
           <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
-            <stringProp name="filename">C:/Users/Ballai.Tamas/Documents/Mesteri/Diss/WeatherApp/house-prices.csv</stringProp>
+            <stringProp name="filename">C:/Users/Ballai.Tamas/Documents/Mesteri/Diss/PurchaseEventsApp/house-purchase-data/house-prices.csv</stringProp>
             <stringProp name="fileEncoding"></stringProp>
             <stringProp name="variableNames"></stringProp>
             <boolProp name="ignoreFirstLine">false</boolProp>
@@ -104,7 +104,7 @@
           </CSVDataSet>
           <hashTree/>
         </hashTree>
-        <kg.apc.jmeter.perfmon.PerfMonCollector guiclass="kg.apc.jmeter.vizualizers.PerfMonGui" testclass="kg.apc.jmeter.perfmon.PerfMonCollector" testname="jp@gc - PerfMon Metrics Collector" enabled="true">
+        <kg.apc.jmeter.perfmon.PerfMonCollector guiclass="kg.apc.jmeter.vizualizers.PerfMonGui" testclass="kg.apc.jmeter.perfmon.PerfMonCollector" testname="jp@gc - PerfMon Metrics Collector" enabled="false">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
           <objProp>
             <name>saveConfig</name>
@@ -138,7 +138,7 @@
               <connectTime>true</connectTime>
             </value>
           </objProp>
-          <stringProp name="filename">C:\Users\Ballai.Tamas\Documents\Mesteri\Diss\WeatherApp\JMeter\perfmon.csv</stringProp>
+          <stringProp name="filename">C:\Users\Ballai.Tamas\Documents\Mesteri\Diss\PurchaseEventsApp\JMeter\perfmon.csv</stringProp>
           <longProp name="interval_grouping">1000</longProp>
           <boolProp name="graph_aggregated">false</boolProp>
           <stringProp name="include_sample_labels"></stringProp>

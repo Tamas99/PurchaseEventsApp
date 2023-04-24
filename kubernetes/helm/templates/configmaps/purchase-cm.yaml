@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: purchase-configmap
+data:
+  MONGO_INITDB_ROOT_USERNAME: 'admin'
+  MONGO_INITDB_ROOT_PASSWORD: 'admin'
+  MONGO_INITDB_DATABASE: {{ .Values.purchase.db.database }}
+  DATABASE_URL: 'mongodb://{{ .Values.purchase.db.host }}:{{ .Values.purchase.db.port }}/{{ .Values.purchase.db.database }}?authSource=admin'
+  KAFKA_BOOTSTRAP_SERVERS: '{{ .Values.kafka.host }}:{{ .Values.kafka.port }}'
+  TAX_CALCULATOR_URL: 'http://tax-calculator-service:8020'

@@ -167,3 +167,4 @@ jmeter/*.log
 kafka*
 kraft*
 repos/
+.terraform*

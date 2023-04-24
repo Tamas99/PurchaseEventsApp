@@ -1,0 +1,18 @@
+purchase:
+  image: tamas99/purchase
+  tag: "0.1"
+  db:
+    host: mongo-purchase-service
+    port: "27017"
+    database: purchase
+
+taxcalculator:
+  image: tamas99/tax-calculator
+  tag: "0.1"
+  db:
+    host: mongo-tax-calculator-service
+    port: "27018"
+
+kafka:
+  host: kafka-0.kafka-svc.default.svc.cluster.local
+  port: "9092"
