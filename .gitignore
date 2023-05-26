@@ -232,7 +232,7 @@ build/
 jmeter/report/
 jmeter/*.csv
 jmeter/*.log
-kafka*
+kafka-*
 kraft*
 repos/
 .terraform*
