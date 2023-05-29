@@ -38,8 +38,13 @@ public class PurchaseService {
     }
 
     public Float getTaxValue(String pole) {
-        Float taxValue = restTemplate.getForObject(apiUrl + "/tax/" + pole, Float.class);
+        return restTemplate.getForObject(apiUrl + "/tax/" + pole, Float.class);
+    }
 
+    public Float calculateFullPrice(PurchaseEvent purchaseEvent) {
+        Float currentTax = getTaxValue(purchaseEvent.getPole());
+        float basePrice = Float.parseFloat(purchaseEvent.getPrice());
+        return basePrice + (basePrice * currentTax)/100;
     }
 }
 

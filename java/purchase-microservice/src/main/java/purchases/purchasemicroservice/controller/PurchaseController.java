@@ -20,6 +20,8 @@ public class PurchaseController {
 
     @PostMapping
     public PurchaseEvent create(@RequestBody PurchaseEvent purchaseEvent) {
+        Float fullPrice = purchaseService.calculateFullPrice(purchaseEvent);
+        purchaseEvent.setPrice(fullPrice.toString());
         kafkaProducerService.sendPurchase(purchaseEvent);
         return purchaseService.save(purchaseEvent);
     }
