@@ -14,4 +14,41 @@ public class Tax {
 
     private Integer quantity;
 
+    public Tax(Pole name, Float value, Integer quantity) {
+        this.name = name;
+        this.value = value;
+        this.quantity = quantity;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Pole getName() {
+        return name;
+    }
+
+    public void setName(Pole name) {
+        this.name = name;
+    }
+
+    public Float getValue() {
+        return value;
+    }
+
+    public void setValue(Float value) {
+        this.value = value;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
 }
