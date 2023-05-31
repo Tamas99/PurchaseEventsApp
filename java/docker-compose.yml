@@ -162,27 +162,27 @@ services:
     ports:
       - 8010:8010
     environment:
-      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
-      TAX_CALCULATOR_URL: http://tax-calculator:8020
+      spring.kafka.bootstrap-servers: "kafka:9092"
+      tax.calculator.url: http://tax-calculator:8020
     depends_on:
 #      mongo:
 #        condition: service_started
       kafka:
         condition: service_healthy
-#  tax-calculator:
-#    build:
-#      context: TaxCalculator
-#    image: tax-calculator-image
-#    container_name: tax-calculator
-#    ports:
-#      - 8020:8020
-#    environment:
-#      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
-#    depends_on:
+  tax-calculator:
+    build:
+      context: tax-calculator
+    image: tax-calculator-image
+    container_name: tax-calculator
+    ports:
+      - 8020:8020
+    environment:
+      spring.kafka.bootstrap-servers: "kafka:9092"
+    depends_on:
 #      mongo-taxes:
 #        condition: service_started
-#      kafka:
-#        condition: service_healthy
+      kafka:
+        condition: service_healthy
 #  mongo:
 #    image: mongo:latest
 #    container_name: mongo

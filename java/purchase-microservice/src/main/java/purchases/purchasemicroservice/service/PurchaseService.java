@@ -13,12 +13,12 @@ public class PurchaseService {
 
     private final PurchaseRepository purchaseRepository;
     private final RestTemplate restTemplate;
-    private final String apiUrl;
+    private final String taxCalculatorUrl;
 
-    public PurchaseService(PurchaseRepository purchaseRepository, RestTemplate restTemplate, @Value("${API_BASE_URL}") String apiUrl) {
+    public PurchaseService(PurchaseRepository purchaseRepository, RestTemplate restTemplate, @Value("${tax.calculator.url:http://localhost:8020}") String taxCalculatorUrl) {
         this.purchaseRepository = purchaseRepository;
         this.restTemplate = restTemplate;
-        this.apiUrl = apiUrl;
+        this.taxCalculatorUrl = taxCalculatorUrl;
     }
 
     public PurchaseEvent save(PurchaseEvent purchaseEvent) {
@@ -38,7 +38,7 @@ public class PurchaseService {
     }
 
     public Float getTaxValue(String pole) {
-        return restTemplate.getForObject(apiUrl + "/tax/" + pole, Float.class);
+        return restTemplate.getForObject(taxCalculatorUrl + "/tax/" + pole, Float.class);
     }
 
     public Float calculateFullPrice(PurchaseEvent purchaseEvent) {

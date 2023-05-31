@@ -27,8 +27,8 @@ public class TaxCalculatorController {
     }
 
     @GetMapping("/{pole}")
-    public Tax readOne(@PathVariable String pole) {
-        return taxCalculatorService.get(pole);
+    public Float readOne(@PathVariable String pole) {
+        return taxCalculatorService.get(pole).getValue();
     }
 
     @PutMapping("/{pole}")

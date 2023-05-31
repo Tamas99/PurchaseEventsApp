@@ -1,9 +1,10 @@
 package purchases.purchasemicroservice.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import java.io.Serializable;
 
 @Document(collection = "purchases")
-public class PurchaseEvent {
+public class PurchaseEvent implements Serializable {
 
     @Id
     private String id;
@@ -46,6 +47,9 @@ public class PurchaseEvent {
         this.bedrooms = bedrooms;
         this.bathrooms = bathrooms;
         this.pole = pole;
+    }
+
+    public PurchaseEvent() {
     }
 
     public String getId() {
