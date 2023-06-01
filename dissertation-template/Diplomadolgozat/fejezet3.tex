@@ -1,0 +1,186 @@
+%----------------------------------------------------------------------------
+\chapter{Elméleti megalapozás és szakirodalmi tanulmány} \label{fejezet3}
+%----------------------------------------------------------------------------
+
+A szakirodalmi tanulmány a téma pontos körülhatárolása érdekében végzett dokumentálás. Ez a fejezet tartalmazza az irodalomkutatást, a hasonló alkalmazások, megoldások rövid ismertetőjét, amelyek már léteznek. Ugyancsak ide kerül azoknak a technológiáknak, elméleti ismereteknek a rövid bemutatása, amelyek szükségesek a megvalósítás megértéséhez.
+Figyelem: ez egy szintézis kell legyen, nem pedig összeollózott szöveg. Mindennek az eredetét bibliográfiai hivatkozással kell jelezni, a szó szerint átvett részeket idézőjelbe kell tenni a forrás megjelölésével. A dolgozatokat plágium detektáló szoftverrel ellenőrzik.
+Az irodalmi áttekintés a szakirodalom az adott területének kritikus, letisztázó elemzése, mely összegzésen, osztályozáson és összehasonlításon alapszik. Korábban közölt adatokat dolgoz fel. Érdemes a témában survey/review címszó alatt közölt cikkeket keresni. Választ ad a következő kérdésekre: 
+Létezik-e egyáltalán megoldás vagy megoldások a felvetett problémára? Melyik az eddigi  legjobb megoldás?
+Melyek a létező megoldások fő korlátai? 
+
+
+
+
+Kétféle szakdolgozatot különböztetünk meg: kutatás-fejlesztés, szoftverfejlesztés.
+Amennyiben a dolgozat \textbf{kutatás-fejlesztés} kategóriába esik (pl. képfeldolgozás, jelfeldolgozás, matematikai modellezés, stb. ) akkor a hangsúlyt az \textit{elméleti vonalra} kell fektetni, pl. milyen elméleti megközelítések léteznek, ezek korlátai, illetve hol lehet a létező megoldásokon javítani.
+
+\textbf{Szoftverfejlesztés}sel kapcsolatos dolgozat esetében (mobilalkalmazás, webes alkalmazás, játékfejlesztés) a hangsúlyt a már \textit{létező szoftverek, technologiák összehasonlítására} kell fektetni. 
+
+
+
+
+\section {Beépített szoftverek, könyvtárak}
+
+Dolgozatom ezen részében előszőr vizsgáljunk meg olyan beépített differenciálegyenlet megoldó szoftvereket, melyeket már megemlítettem. Ezek közül én a Matlab és a Boost - Odeint beépített programját használtam és vizsgáltam meg. Mindkét esetben közönséges differenciálegyenletek (ODE) megoldására, az előre megírt algoritmus segítségével, melynek hátterében természetesen a Dormand-Prince módszer áll.
+
+
+	\begin{align}
+	x&=1+1+1+1\\
+	&=4.
+\end{align}
+
+	\begin{align}
+	y&=mx+b\nonumber\\
+	z&=nw+c.
+\end{align}
+
+			\begin{align}
+	\int_0^1\sum_a^b\prod_\alpha^\beta.
+\end{align}
+	\begin{align*}
+	\frac{12}{34}.
+\end{align*}
+
+
+
+\begin{definition}
+	Legyen $\left(X,d\right)$ \'es $\left(Y,\rho\right)$ k\'et metrikus
+	t\'er, legyen $T:X\to Y$ egy lek\'epez\'es. Azt mondjuk, hogy a $T$ lek\'epez\'es
+	Lipschitz tulajdons\'ag\'u, ha l\'etezik egy olyan $L>0$ sz\'am amelyre 
+	\[
+	\rho\left(Tx,Ty\right)\leq Ld(x,y)\;\forall x,y\in X.
+	\]
+	Az L sz\'amot Lipschitz \'alland\'onak nevezz\"uk.
+\end{definition}
+
+
+Ha $T:X\to Y$ lek\'epez\'es Lipschitz tulajdons\'ag\'u, \'es az $L<1$ akkor
+a $T$ oper\'atort \textbf{kontrakci\'onak} nevezz\"uk. Azt mondjuk, hogy
+$x^{*}\in X$ fixpontja a $T$ oper\'atornak ha 
+\[
+Tx^{*}=x^{*}.
+\]
+\begin{theorem}{Banach f\'ele fixpontt\'etel}
+	Legyen $\left(X,d\right)$ teljes metrikus t\'er \'es $T:X\to X$ lek\'epez\'es
+	egy kontrakci\'o az $L<1$ \'alland\'oval. Ekkor igazak a k\"ovetkez\H{o}
+	\'all\'it\'asok:
+	\begin{enumerate}
+		\item $T$-nek egy \'es csakis egy $x^{*}$ fixpontja.
+		\item B\'arhogy v\'alasztunk meg egy $x_{0}\in X$ elemet, a $x_{k+1}=Tx_{k}$
+		sorozat konvergens \'es $Tx_{k}\to x^{*},$ ahol $k$ term\'eszetes sz\'am.
+		\item Igaz, hogy 
+		\[
+		d\left(x_{k},x^{*}\right)\leq\frac{L^{k}}{1-L}d(x_{0},Tx_{0}).
+		\]
+	\end{enumerate}
+\end{theorem}
+
+
+
+\subsection {Matlab - \href{https://www.mathworks.com/help/matlab/ref/ode45.html}{ode45}} \label{MatlabOde45}
+
+A Matlab egy programcsomag és egyben egy technikai nyelv is, mely magas szinten lehetőséget biztosít számítások elvégzésére, modellezésre, szimulációra, megjelenítésre, vizualizációra és számos más hasznos mérnöki munka elvégzésére. Esetünkben a legfontosabb, hogy könnyedén tudunk közönséges differenciálegyenleteket megoldani az ode45 program segítségével. Emellett az eredményeket egy jól megtervezett felületen ki is tudjuk ábrázolni. Az alábbi példában jól látható, hogy milyen egyszerű és kényelmes a használata:
+
+\begin{lstlisting}[caption={Matlab példakód diff. egyenlet megoldására.}, captionpos=b]
+	f = @(t,y) y;
+	t = [0 10];
+	y0 = 1.0;
+	ode45(f, t, y0);
+	plot(t, y(:));
+\end{lstlisting}
+
+
+A fenti bemenetre $ n = 100 $ - szor lefuttattuk az algoritmust és a következő időeredményeket kaptuk:
+\begin{itemize}
+	\item Futási idők \textbf{átlaga}: $ 0.0043 $ sec
+	\item Futási idők \textbf{minimuma}: $ 0.0026 $ sec
+	\item Futási idők \textbf{maximuma}: $ 0.1504 $ sec
+\end{itemize}
+
+
+
+
+\begin{center}
+\smartdiagram[flow diagram:horizontal]{Edit,
+	\LaTeX, Bib\TeX/ biber, make\-index, \LaTeX}
+\end{center}
+
+\subsection {Boost - \href{http://headmyshoulder.github.io/odeint-v2/}{Odeint}} \label{BoostOdeint}
+
+Egy másik előre megírt közönséges differenciálegyenlet megoldó a Boost könyvtárcsomag Odeint nevezetű könyvtára. Ez egy modern C++ nyelven írt csomag, lényeges jellemzői, hogy \textbf{nagy teljesítményre} képes és \textbf{nagyon magas szinten} (absztraktan - Template Metaprogramming) van megírva, így \textbf{rugalmas} és könnyen integrálható különböző rendszerekbe. Emellett rugalmas a bementi adatok típusát illetően is. Ugyanakkor jó tudni, hogy ez a nagyon absztrakt megvalósítás hátrány is lehet, mert bizonyos esetekben nagyon nehéz megérteni vagy megoldani egy felmerülő problémát. Most lássunk egy egyszerű példát a használatára:
+
+\begin{lstlisting}[caption={Odeint példakód.}, captionpos=b, language = C++]
+#include <iostream>
+#include <boost/numeric/odeint.hpp>
+
+using namespace std;
+using namespace boost::numeric::odeint;
+
+typedef runge_kutta_dopri5<double> stepper_type;
+
+void rhs( const double x , double &dxdt , const double t ) {
+	dxdt = 3.0/(2.0*t*t) + x/(2.0*t);
+}
+
+void write_cout( const double &x , const double t ) {
+	cout << t << '\t' << x << endl;
+}
+
+int main() {
+	double x = 0.0;    
+	integrate_adaptive( make_controlled( 1E-12 , 1E-12 , stepper_type() ) ,
+	rhs , x , 1.0 , 10.0 , 0.1 , write_cout );
+}
+\end{lstlisting}
+\pagebreak
+Az előző kódrészlet eredménye a következő:
+
+
+
+\begin{itemize}
+	\item Futási idők \textbf{átlaga}: $ 0.0989 $ sec
+	\item Futási idők \textbf{minimuma}: $ 0.09 $ sec
+	\item Futási idők \textbf{maximuma}: $ 0.099 $ sec
+\end{itemize}
+
+\section {P\'elda k\'odr\'eszletre} \label{fejezet3_2}
+
+\begin{lstlisting}[caption={Matlab kód ode45 használata nélkül.}, captionpos=b, language = Matlab]
+function [yy, tt, timeSpent] = fun_dopri45(f, y0, t0, tf, tolerance)
+	...
+	while t < tf
+		if (t+h >= tf)
+			h = tf-t;
+		end
+		
+		% Calculate k1, k2, ... , k7
+		k1 = h*feval(f, t+h*C(1), y);
+		k2 = h*feval(f, t+h*C(2), y + A2(1)*k1);
+		...
+		k7 = h*feval(f, t+h*C(7), y + A7(1)*k1 + A7(3)*k3 + ... + A7(6)*k6);
+		
+		% Calcaulate the next point
+		yt = y + A7(1)*k1 + A7(3)*k3 + A7(4)*k4 + A7(5)*k5 + A7(6)*k6;
+		% Calculate the error
+		err = abs(E(1)*k1 + E(3)*k3 + ... + E(7)*k7);
+		
+		if max(err) < tolerance
+			t = t + h;
+			y = yt;
+			...
+		end
+		
+		% Calculate optimal step size
+		scale = 1.25*(maxErr/tolerance)^(1/5);
+		if scale > 0.2
+			h = h / scale;
+		else
+			h = 5.0*h;
+		end
+	end
+end
+\end{lstlisting}
+
+
+
+
