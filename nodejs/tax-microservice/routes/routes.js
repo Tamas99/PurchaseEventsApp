@@ -1,9 +1,7 @@
 const express = require('express');
 const Tax = require('../model/tax');
 
-const router = express.Router()
-
-module.exports = router;
+const router = express.Router();
 
 //Post Method
 router.post('/tax', async (req, res) => {
@@ -14,10 +12,10 @@ router.post('/tax', async (req, res) => {
     })
     try {
         const taxToSave = await tax.save();
-        res.status(200).json(taxToSave)
+        res.status(200).json(taxToSave);
     }
     catch (error) {
-        res.status(400).json({message: error.message})
+        res.status(400).json({message: error.message});
     }
 })
 
@@ -25,10 +23,10 @@ router.post('/tax', async (req, res) => {
 router.get('/tax', async (req, res) => {
     try{
         const taxes = await Tax.find();
-        res.json(taxes)
+        res.json(taxes);
     }
     catch(error){
-        res.status(500).json({message: error.message})
+        res.status(500).json({message: error.message});
     }
 })
 
@@ -36,10 +34,10 @@ router.get('/tax', async (req, res) => {
 router.get('/tax/:pole', async (req, res) => {
     try{
         const tax = await Tax.findOne({ name: req.params.pole });
-        res.json(tax)
+        res.json(tax.value);
     }
     catch(error){
-        res.status(500).json({message: error.message})
+        res.status(500).json({message: error.message});
     }
 })
 
@@ -47,9 +45,11 @@ router.get('/tax/:pole', async (req, res) => {
 router.delete('/tax', async (req, res) => {
     try {
         await Tax.deleteMany();
-        res.send(`Documents have been deleted..`)
+        res.send(`Documents have been deleted..`);
     }
     catch (error) {
-        res.status(400).json({ message: error.message })
+        res.status(400).json({ message: error.message });
     }
 })
+
+module.exports = router;

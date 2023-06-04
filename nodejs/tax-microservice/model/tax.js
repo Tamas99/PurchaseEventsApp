@@ -17,4 +17,4 @@ const taxSchema = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('PurchaseEvent', taxSchema)
+module.exports = mongoose.model('Tax', taxSchema)
