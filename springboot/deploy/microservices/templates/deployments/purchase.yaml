@@ -25,11 +25,11 @@ spec: #specifications for our object
         - containerPort: 8010 #the port of the container within the pod
         resources:
           requests:  # The resources the Pod will request upon startup
-            cpu: "500m"  # equivalent to 0.1 of a CPU core
-            memory: "2Gi"  # 128 Mebibytes of memory
+            cpu: "2.0"
+            memory: "2Gi"
           limits:  # The maximum resources the Pod can use
-            cpu: "500m"  # up to 0.5 of a CPU core
-            memory: "2Gi"  # up to 512 Mebibytes of memory
+            cpu: "2.0"
+            memory: "2Gi"
       restartPolicy: Always
       
 ---
