@@ -1,4 +1,4 @@
-package purchases.taxcalculator.model;
+package purchases.taxmicroservice.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 

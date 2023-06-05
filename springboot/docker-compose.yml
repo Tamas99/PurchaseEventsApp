@@ -12,10 +12,6 @@ services:
       ZOOKEEPER_SERVER_ID: 1
       ZOOKEEPER_SERVERS: zoo1:2888:3888
     deploy:
-      resources:
-        limits:
-          cpus: "0.5"
-          memory: 512M
       restart_policy:
         condition: on-failure
   kafka:
@@ -44,10 +40,6 @@ services:
       KAFKA_HOST_NAME: 0.0.0.0
       KAFKA_ADVERTISED_HOST_NAME: kafka:9092
     deploy:
-      resources:
-        limits:
-          cpus: "0.5"
-          memory: 512M
       restart_policy:
         condition: on-failure
     depends_on:
@@ -61,7 +53,7 @@ services:
   purchase-microservice:
     build:
       context: purchase-microservice
-    image: purchase-microservice-image
+    image: tamas99/purchase:springboot-0.1
     container_name: purchase-microservice
     ports:
       - 8010:8010
@@ -74,7 +66,7 @@ services:
   tax-microservice:
     build:
       context: tax-microservice
-    image: tax-microservice-image
+    image: tamas99/tax:springboot-0.1
     container_name: tax-microservice
     ports:
       - 8020:8020

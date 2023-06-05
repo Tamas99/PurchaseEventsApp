@@ -1,4 +1,4 @@
-package purchases.taxcalculator.model;
+package purchases.taxmicroservice.model;
 
 public enum Pole {
     North,

@@ -1,23 +1,21 @@
-package purchases.taxcalculator.service;
+package purchases.taxmicroservice.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
-import purchases.taxcalculator.model.PurchaseEvent;
-import purchases.taxcalculator.model.Tax;
-import purchases.taxcalculator.repository.TaxCalculatorRepository;
+import purchases.taxmicroservice.model.PurchaseEvent;
+import purchases.taxmicroservice.model.Tax;
+import purchases.taxmicroservice.repository.TaxRepository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class KafkaConsumerService {
 
-    private final TaxCalculatorRepository taxCalculatorRepository;
+    private final TaxRepository taxRepository;
 
-    public KafkaConsumerService(TaxCalculatorRepository taxCalculatorRepository) {
-        this.taxCalculatorRepository = taxCalculatorRepository;
+    public KafkaConsumerService(TaxRepository taxRepository) {
+        this.taxRepository = taxRepository;
     }
 
     @KafkaListener(
@@ -31,7 +29,7 @@ public class KafkaConsumerService {
     }
 
     private void handleEvent(PurchaseEvent purchaseEvent) {
-        List<Tax> taxes = taxCalculatorRepository.findAll();
+        List<Tax> taxes = taxRepository.findAll();
         Optional<Tax> targetTax = taxes.stream()
                 .filter(tax -> tax.getName().name().equals(purchaseEvent.getPole()))
                 .findFirst();
@@ -40,7 +38,7 @@ public class KafkaConsumerService {
             Float newTaxValue = (tax.getValue() + tax.getQuantity()) / (taxes.get(0).getValue() + taxes.get(1).getValue() + taxes.get(2).getValue() + (taxes.get(0).getQuantity() + taxes.get(1).getQuantity() + taxes.get(2).getQuantity())/3);
             tax.setValue(tax.getValue() + newTaxValue);
             tax.setQuantity(tax.getQuantity() + 1);
-            Tax updatedTax = taxCalculatorRepository.save(tax);
+            Tax updatedTax = taxRepository.save(tax);
             System.out.println("Updated Tax: " + updatedTax.toString());
         });
     }

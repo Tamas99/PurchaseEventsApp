@@ -15,7 +15,7 @@ public class PurchaseService {
     private final RestTemplate restTemplate;
     private final String taxCalculatorUrl;
 
-    public PurchaseService(PurchaseRepository purchaseRepository, RestTemplate restTemplate, @Value("${tax.calculator.url:http://localhost:8020}") String taxCalculatorUrl) {
+    public PurchaseService(PurchaseRepository purchaseRepository, RestTemplate restTemplate, @Value("${tax.microservice.url:http://localhost:8020}") String taxCalculatorUrl) {
         this.purchaseRepository = purchaseRepository;
         this.restTemplate = restTemplate;
         this.taxCalculatorUrl = taxCalculatorUrl;

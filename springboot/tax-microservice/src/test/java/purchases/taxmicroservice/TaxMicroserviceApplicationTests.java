@@ -1,10 +1,10 @@
-package purchases.taxcalculator;
+package purchases.taxmicroservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class TaxCalculatorApplicationTests {
+class TaxMicroserviceApplicationTests {
 
 	@Test
 	void contextLoads() {
