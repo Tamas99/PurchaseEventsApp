@@ -1,9 +1,9 @@
 const express = require('express');
+const sendPurchaseEvent = require('../kafka/producer');
 const PurchaseEvent = require('../model/purchase_event');
+const getFullPrice = require('../services/priceManagerService');
 
-const router = express.Router()
-
-module.exports = router;
+const router = express.Router();
 
 //Post Method
 router.post('/purchase', async (req, res) => {
@@ -20,14 +20,17 @@ router.post('/purchase', async (req, res) => {
         bedrooms: req.body.bedrooms,
         bathrooms: req.body.bathrooms,
         pole: req.body.pole
-    })
+    });
 
     try {
+        const fullPrice = await getFullPrice(purchaseEvent);
+        purchaseEvent.price = fullPrice;
+        await sendPurchaseEvent(purchaseEvent);
         const purchaseEventToSave = await purchaseEvent.save();
-        res.status(200).json(purchaseEventToSave)
+        res.status(200).json(purchaseEventToSave);
     }
     catch (error) {
-        res.status(400).json({message: error.message})
+        res.status(400).json({message: error.message});
     }
 })
 
@@ -35,10 +38,10 @@ router.post('/purchase', async (req, res) => {
 router.get('/purchase', async (req, res) => {
     try{
         const purchaseEvents = await PurchaseEvent.find();
-        res.json(purchaseEvents)
+        res.json(purchaseEvents);
     }
     catch(error){
-        res.status(500).json({message: error.message})
+        res.status(500).json({message: error.message});
     }
 })
 
@@ -46,10 +49,10 @@ router.get('/purchase', async (req, res) => {
 router.get('/purchase/:id', async (req, res) => {
     try{
         const purchaseEvent = await PurchaseEvent.findById(req.params.id);
-        res.json(purchaseEvent)
+        res.json(purchaseEvent);
     }
     catch(error){
-        res.status(500).json({message: error.message})
+        res.status(500).json({message: error.message});
     }
 })
 
@@ -57,9 +60,11 @@ router.get('/purchase/:id', async (req, res) => {
 router.delete('/purchase', async (req, res) => {
     try {
         await PurchaseEvent.deleteMany();
-        res.send(`Documents have been deleted..`)
+        res.send(`Documents have been deleted..`);
     }
     catch (error) {
-        res.status(400).json({ message: error.message })
+        res.status(400).json({ message: error.message });
     }
 })
+
+module.exports = router;

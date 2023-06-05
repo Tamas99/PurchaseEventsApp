@@ -162,22 +162,22 @@ services:
     ports:
       - 8010:8010
     environment:
-      spring.kafka.bootstrap-servers: "kafka:9092"
-      tax.calculator.url: http://tax-calculator:8020
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      TAX_MICROSERVICE_URL: http://tax-microservice:8020
     depends_on:
 #      mongo:
 #        condition: service_started
       kafka:
         condition: service_healthy
-  tax-calculator:
+  tax-microservice:
     build:
-      context: tax-calculator
-    image: tax-calculator-image
-    container_name: tax-calculator
+      context: tax-microservice
+    image: tax-microservice-image
+    container_name: tax-microservice
     ports:
       - 8020:8020
     environment:
-      spring.kafka.bootstrap-servers: "kafka:9092"
+      KAFKA_BOOTSTRAP_SERVERS: "kafka:9092"
     depends_on:
 #      mongo-taxes:
 #        condition: service_started

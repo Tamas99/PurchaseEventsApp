@@ -1,28 +1,28 @@
 apiVersion: apps/v1 #version of the API to use
 kind: Deployment #what kind of object we're deploying
 metadata: #information about our object we're deploying
-  name: purchase-deployment #name of the deployment
+  name: tax-deployment #name of the deployment
   labels: #a labels on the deployments created
-    app: purchase
+    app: tax
 spec: #specifications for our object
   replicas: 1 #the number of pods that should always be running
   selector: #which pods the replica set should be responsible for
     matchLabels:
-      app: purchase #any pods with labels matching this I'm responsible for
+      app: tax #any pods with labels matching this I'm responsible for
   template: #the pod template that gets deployed
     metadata:
       labels: #labels on the replica set and pods created
-        app: purchase
+        app: tax
     spec:
       containers:
-      - name: purchase-container #the name of the container within the pod
-        image: {{ .Values.purchase.image }}:{{ .Values.purchase.tag }} #which container image should be pulled
-        envFrom:
-        - configMapRef:
-            name: purchase-configmap
+      - name: tax-container #the name of the container within the pod
+        image: {{ .Values.tax.image }}:{{ .Values.tax.tag }} #which container image should be pulled
+        env:
+        - name: KAFKA_BOOTSTRAP_SERVERS
+          value: kafka-svc:9092
         imagePullPolicy: IfNotPresent
         ports:
-        - containerPort: 8010 #the port of the container within the pod
+        - containerPort: 8020 #the port of the container within the pod
         resources:
           requests:  # The resources the Pod will request upon startup
             cpu: "500m"  # equivalent to 0.1 of a CPU core
@@ -36,15 +36,15 @@ spec: #specifications for our object
 apiVersion: v1 #version of the API to use
 kind: Service #what kind of object we're deploying
 metadata: #information about our object we're deploying
-  name: purchase-service #name of the service
+  name: tax-service #name of the service
   labels:
-    app: purchase
+    app: tax
 spec: #specifications for our object
 #  type: NodePort #Ignore for now
   type: LoadBalancer #Ignore for now
   ports: #Ignore for now
   - protocol: TCP
-    port: 8010
-    targetPort: 8010
+    port: 8020
+    targetPort: 8020
   selector: #label selector used to identify pods
-    app: purchase
+    app: tax

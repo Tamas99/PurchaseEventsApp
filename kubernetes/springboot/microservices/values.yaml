@@ -5,7 +5,7 @@ purchase:
     port: "27017"
     database: purchases
 
-taxcalculator:
+tax:
   image: tamas99/taxcalc:springboot-0.1
   db:
     host: mongo-mongodb.default.svc.cluster.local
