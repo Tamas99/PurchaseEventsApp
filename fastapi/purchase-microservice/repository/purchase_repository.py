@@ -10,9 +10,9 @@ from ..model.purchase_event import PurchaseEventModel
 
 class PurchaseRepository:
     def __init__(self, app: FastAPI):
-        self.db_client = MongoDBClient()
-        app.add_event_handler('startup', self.db_client.connect(app))
-        app.add_event_handler('shutdown', self.db_client.close())
+        self.db_client = MongoDBClient(app.state.config.get("DATABASE_URL"))
+        app.add_event_handler('startup', self.db_client.connect)
+        app.add_event_handler('shutdown', self.db_client.close)
 
     async def save(self, purchase_event: PurchaseEventModel) -> PurchaseEventModel:
         db: AsyncIOMotorDatabase = self.db_client.get_database('purchases')

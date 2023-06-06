@@ -1,6 +1,7 @@
 from bson import ObjectId
-from py_object_id import PyObjectId
 from pydantic import BaseModel, Field
+
+from .py_object_id import PyObjectId
 
 
 class PurchaseEventModel(BaseModel):

@@ -58,7 +58,8 @@ services:
     ports:
       - 8010:8010
     environment:
-      KAFKA_BOOTSTRAP_SERVERS: "kafka:9092"
+      DATABASE_URL: mongodb+srv://Tamas99:nCZAFtCJwWrdvAOS@microservicedb.cvc50.mongodb.net/purchases?retryWrites=true&w=majority
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
       TAX_MICROSERVICE_URL: http://tax-microservice:8020
     depends_on:
       kafka:
@@ -71,7 +72,8 @@ services:
     ports:
       - 8020:8020
     environment:
-      KAFKA_BOOTSTRAP_SERVERS: "kafka:9092"
+      DATABASE_URL: mongodb+srv://Tamas99:nCZAFtCJwWrdvAOS@microservicedb.cvc50.mongodb.net/taxes?retryWrites=true&w=majority
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
     depends_on:
       kafka:
         condition: service_healthy

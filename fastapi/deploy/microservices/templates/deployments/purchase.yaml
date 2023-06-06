@@ -16,7 +16,7 @@ spec: #specifications for our object
     spec:
       containers:
       - name: purchase-container #the name of the container within the pod
-        image: {{ .Values.purchase.image }}:{{ .Values.purchase.tag }} #which container image should be pulled
+        image: {{ .Values.purchase.image }} #which container image should be pulled
         envFrom:
         - configMapRef:
             name: purchase-configmap

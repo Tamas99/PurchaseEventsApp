@@ -2,9 +2,6 @@
 FROM python:slim-buster
 
 # 
-WORKDIR /app
-
-# 
 COPY ./requirements.txt /app/requirements.txt
 
 # 
@@ -14,4 +11,4 @@ RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
 COPY . /app
 
 # 
-CMD ["python", "app.py"]
+CMD ["python", "-m", "app.app"]

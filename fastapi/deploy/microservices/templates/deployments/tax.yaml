@@ -16,10 +16,10 @@ spec: #specifications for our object
     spec:
       containers:
       - name: tax-container #the name of the container within the pod
-        image: {{ .Values.tax.image }}:{{ .Values.tax.tag }} #which container image should be pulled
-        env:
-        - name: KAFKA_BOOTSTRAP_SERVERS
-          value: kafka-svc:9092
+        image: {{ .Values.tax.image }} #which container image should be pulled
+        envFrom:
+        - configMapRef:
+            name: tax-configmap
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8020 #the port of the container within the pod
