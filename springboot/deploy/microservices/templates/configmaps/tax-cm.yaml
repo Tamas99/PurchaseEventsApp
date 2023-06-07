@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tax-configmap
+data:
+  spring.data.mongodb.database: {{ .Values.tax.db.database }}
+  spring.data.mongodb.uri: 'mongodb://{{ .Values.tax.db.host }}:{{ .Values.tax.db.port }}/{{ .Values.tax.db.database }}?authSource=admin'
+  spring.kafka.bootstrap-servers: '{{ .Values.kafka.host }}:{{ .Values.kafka.port }}'

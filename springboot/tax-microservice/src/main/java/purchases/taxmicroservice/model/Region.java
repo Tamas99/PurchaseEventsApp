@@ -1,6 +1,6 @@
 package purchases.taxmicroservice.model;
 
-public enum Pole {
+public enum Region {
     North,
     South,
     West,

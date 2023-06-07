@@ -16,28 +16,18 @@ public class TaxController {
         this.taxService = taxService;
     }
 
-    @PostMapping
-    public Tax create(@RequestBody Tax tax) {
-        return taxService.save(tax);
+    @GetMapping("/{pole}")
+    public Float getOne(@PathVariable String pole) {
+        return taxService.getOne(pole);
     }
 
     @GetMapping
-    public List<Tax> read() {
+    public List<Tax> getAll() {
         return taxService.getAll();
     }
 
-    @GetMapping("/{pole}")
-    public Float readOne(@PathVariable String pole) {
-        return taxService.get(pole).getValue();
-    }
-
-    @PutMapping("/{pole}")
-    public Tax update(@PathVariable String pole, @RequestBody Tax tax) {
-        return taxService.update(pole, tax);
-    }
-
     @DeleteMapping
-    public void delete() {
-        taxService.delete();
+    public void deleteAll() {
+        taxService.deleteAll();
     }
 }

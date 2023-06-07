@@ -20,6 +20,12 @@ class PurchaseService:
     async def _save(self, purchase_event: PurchaseEventModel) -> PurchaseEventModel:
         return await self.purchase_repository.save(purchase_event)
 
+    async def get_all(self) -> List[PurchaseEventModel]:
+        return await self.purchase_repository.find_all()
+
+    async def delete_all(self) -> None:
+        await self.purchase_repository.delete_all()
+
     async def _get_tax_value(self, region: str) -> float:
         return requests.get(url=self._tax_microservice_url + '/tax/' + region).json()
 
@@ -29,14 +35,8 @@ class PurchaseService:
     async def process_event(self, purchase_event: PurchaseEventModel) -> PurchaseEventModel:
         tax_value: float = await self._get_tax_value(purchase_event['region'])
         fullPrice: float = await self._calculate_full_price(float(purchase_event['price']), tax_value)
-        purchase_event['price'] = fullPrice
+        purchase_event['price'] = str(fullPrice)
         saved_purchase_event: InsertOneResult = await self._save(purchase_event)
         logger.info('Saved purchase event: ' +
                     str(saved_purchase_event.inserted_id))
         return purchase_event
-
-    async def get_all(self) -> List[PurchaseEventModel]:
-        return await self.purchase_repository.find_all()
-
-    async def delete_all(self) -> None:
-        await self.purchase_repository.delete_all()

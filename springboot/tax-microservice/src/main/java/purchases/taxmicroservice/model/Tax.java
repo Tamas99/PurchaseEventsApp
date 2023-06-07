@@ -8,13 +8,13 @@ public class Tax {
     @Id
     private String id;
 
-    private Pole name;
+    private Region name;
 
     private Float value;
 
     private Integer quantity;
 
-    public Tax(Pole name, Float value, Integer quantity) {
+    public Tax(Region name, Float value, Integer quantity) {
         this.name = name;
         this.value = value;
         this.quantity = quantity;
@@ -28,11 +28,11 @@ public class Tax {
         this.id = id;
     }
 
-    public Pole getName() {
+    public Region getName() {
         return name;
     }
 
-    public void setName(Pole name) {
+    public void setName(Region name) {
         this.name = name;
     }
 

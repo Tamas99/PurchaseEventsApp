@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 class TaxService:
     def __init__(self, app: FastAPI, kafka_consumer_service: KafkaConsumerService):
         self.tax_repository: TaxRepository = TaxRepository(app)
-        kafka_consumer_service.subscribe(self.handleEvent)
+        kafka_consumer_service.subscribe(self.handle_event)
 
     async def get_one(self, region: str) -> float:
         tax: TaxModel = await self.tax_repository.find_one_by_region(region)
@@ -31,7 +31,7 @@ class TaxService:
     async def delete_all(self) -> None:
         await self.tax_repository.delete_all()
 
-    async def handleEvent(self, purchase_event) -> None:
+    async def handle_event(self, purchase_event) -> None:
         taxes: list[TaxModel] = await self.tax_repository.find_all()
         taxes = jsonable_encoder(taxes)
         target_tax: TaxModel = [

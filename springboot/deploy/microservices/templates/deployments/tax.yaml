@@ -17,11 +17,9 @@ spec: #specifications for our object
       containers:
       - name: tax-container #the name of the container within the pod
         image: {{ .Values.tax.image }} #which container image should be pulled
-        env:
-        - name: spring.data.mongodb.uri
-          value: 'mongodb://{{ .Values.tax.db.host }}:{{ .Values.tax.db.port }}/{{ .Values.tax.db.database }}?authSource=admin'
-        - name: spring.kafka.bootstrap-servers
-          value: '{{ .Values.kafka.host }}:{{ .Values.kafka.port }}'
+        envFrom:
+        - configMapRef:
+            name: tax-configmap
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8020 #the port of the container within the pod

@@ -58,6 +58,7 @@ services:
     ports:
       - 8010:8010
     environment:
+      spring.data.mongodb.uri: mongodb+srv://Tamas99:nCZAFtCJwWrdvAOS@microservicedb.cvc50.mongodb.net/purchases?retryWrites=true&w=majority
       spring.kafka.bootstrap-servers: "kafka:9092"
       tax.microservice.url: http://tax-microservice:8020
     depends_on:
@@ -71,6 +72,7 @@ services:
     ports:
       - 8020:8020
     environment:
+      spring.data.mongodb.uri: mongodb+srv://Tamas99:nCZAFtCJwWrdvAOS@microservicedb.cvc50.mongodb.net/taxes?retryWrites=true&w=majority
       spring.kafka.bootstrap-servers: "kafka:9092"
     depends_on:
       kafka:
