@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
-const Pole = require('../model/pole');
+const Region = require('../model/regions');
 const Tax = require('../model/tax');
 
 async function seedTaxes() {
     const taxCount = await mongoose.connection.db.collection('taxes').countDocuments();
 
-    if(taxCount === 0) {
+    if (taxCount === 0) {
         const taxes = [];
-        Object.values(Pole).forEach(pole => {
-            taxes.push( new Tax({name: pole, value: 10, quantity: 0}));
+        Object.values(Region).forEach(region => {
+            taxes.push(new Tax({ name: region, value: 10, quantity: 0 }));
         })
 
         await mongoose.connection.db.collection('taxes').insertMany(taxes);

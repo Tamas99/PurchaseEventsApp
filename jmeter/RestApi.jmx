@@ -58,7 +58,7 @@
 	&quot;sqFt&quot;: &quot;${SqFt}&quot;,&#xd;
 	&quot;bedrooms&quot;: &quot;${Bedrooms}&quot;,&#xd;
 	&quot;bathrooms&quot;: &quot;${Bathrooms}&quot;,&#xd;
-	&quot;pole&quot;: &quot;${Pole}&quot;&#xd;
+	&quot;region&quot;: &quot;${Pole}&quot;&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>

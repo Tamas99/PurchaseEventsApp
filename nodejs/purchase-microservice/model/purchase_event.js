@@ -45,7 +45,7 @@ const purchaseEventSchema = new mongoose.Schema({
         required: true,
         type: String
     },
-    pole: {
+    region: {
         required: true,
         type: String
     }

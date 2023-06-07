@@ -17,18 +17,16 @@ spec: #specifications for our object
       containers:
       - name: tax-container #the name of the container within the pod
         image: {{ .Values.tax.image }} #which container image should be pulled
-        env:
-        - name: DATABASE_URL
-          value: 'mongodb://{{ .Values.tax.db.host }}:{{ .Values.tax.db.port }}/{{ .Values.tax.db.database }}?authSource=admin'
-        - name: KAFKA_BOOTSTRAP_SERVERS
-          value: '{{ .Values.kafka.host }}:{{ .Values.kafka.port }}'
+        envFrom:
+        - configMapRef:
+            name: tax-configmap
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8020 #the port of the container within the pod
         resources:
           requests:  # The resources the Pod will request upon startup
             cpu: "500m"
-            memory: "128Mi"
+            memory: "256Mi"
           limits:  # The maximum resources the Pod can use
             cpu: "500m"
             memory: "512Mi"

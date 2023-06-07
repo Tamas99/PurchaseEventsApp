@@ -1,7 +1,7 @@
 const express = require('express');
 const sendPurchaseEvent = require('../kafka/producer');
+const processEvent = require('../service/purchase_service');
 const PurchaseEvent = require('../model/purchase_event');
-const getFullPrice = require('../services/priceManagerService');
 
 const router = express.Router();
 
@@ -19,40 +19,28 @@ router.post('/purchase', async (req, res) => {
         sqFt: req.body.sqFt,
         bedrooms: req.body.bedrooms,
         bathrooms: req.body.bathrooms,
-        pole: req.body.pole
+        region: req.body.region
     });
 
     try {
-        const fullPrice = await getFullPrice(purchaseEvent);
-        purchaseEvent.price = fullPrice;
-        await sendPurchaseEvent(purchaseEvent);
-        const purchaseEventToSave = await purchaseEvent.save();
-        res.status(200).json(purchaseEventToSave);
+        const processedPurchaseEvent = await processEvent(purchaseEvent);
+        await processedPurchaseEvent.save();
+        await sendPurchaseEvent(processedPurchaseEvent);
+        res.status(200).json(processedPurchaseEvent);
     }
     catch (error) {
-        res.status(400).json({message: error.message});
+        res.status(400).json({ message: error.message });
     }
 })
 
 //Get all Method
 router.get('/purchase', async (req, res) => {
-    try{
+    try {
         const purchaseEvents = await PurchaseEvent.find();
         res.json(purchaseEvents);
     }
-    catch(error){
-        res.status(500).json({message: error.message});
-    }
-})
-
-//Get by ID Method
-router.get('/purchase/:id', async (req, res) => {
-    try{
-        const purchaseEvent = await PurchaseEvent.findById(req.params.id);
-        res.json(purchaseEvent);
-    }
-    catch(error){
-        res.status(500).json({message: error.message});
+    catch (error) {
+        res.status(500).json({ message: error.message });
     }
 })
 

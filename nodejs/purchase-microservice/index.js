@@ -6,7 +6,7 @@ const port = process.env.PORT || 8010;
 const app = express();
 app.use(express.json());
 
-const routes = require('./routes/routes');
+const routes = require('./route/routes');
 app.use('', routes)
 
 async function startServer() {
