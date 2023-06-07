@@ -5,5 +5,5 @@ metadata:
 data:
   spring.data.mongodb.database: {{ .Values.purchase.db.database }}
   spring.data.mongodb.uri: 'mongodb://{{ .Values.purchase.db.host }}:{{ .Values.purchase.db.port }}/{{ .Values.purchase.db.database }}?authSource=admin'
-  spring.kafka.bootstrap-servers: '{{ .Values.kafka.host }}:{{ .Values.kafka.port }}'
+  spring.kafka.bootstrap-servers: '{{ .Values.kafka.producer }}'
   tax.microservice.url: 'http://tax-service:8020'

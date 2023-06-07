@@ -4,4 +4,4 @@ metadata:
   name: tax-configmap
 data:
   DATABASE_URL: 'mongodb://{{ .Values.tax.db.host }}:{{ .Values.tax.db.port }}/{{ .Values.tax.db.database }}?authSource=admin'
-  KAFKA_BOOTSTRAP_SERVERS: '{{ .Values.kafka.host }}:{{ .Values.kafka.port }}'
+  KAFKA_BOOTSTRAP_SERVERS: '{{ .Values.kafka.consumer }}'

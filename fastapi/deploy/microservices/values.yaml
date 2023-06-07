@@ -13,5 +13,5 @@ tax:
     database: taxes
 
 kafka:
-  host: kafka-0.kafka-svc.default.svc.cluster.local
-  port: "9092"
+  producer: kafka-0.kafka-headless.default.svc.cluster.local:9092
+  consumer: kafka.default.svc.cluster.local:9092

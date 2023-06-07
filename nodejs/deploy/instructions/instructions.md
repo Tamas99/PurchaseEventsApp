@@ -22,6 +22,14 @@ helm install mongo --set auth.enabled=false bitnami/mongodb
 
 ### Elasticsearch
 
+Add the Elastic Helm:
+
+```bash
+helm repo add elastic https://helm.elastic.co
+```
+
+Install:
+
 ```bash
 helm install elasticsearch elastic/elasticsearch --set replicas=2
 ```
@@ -36,4 +44,18 @@ helm install kibana elastic/kibana --set service.type=LoadBalancer
 
 ```bash
 helm install metricbeat elastic/metricbeat
+```
+
+### Apache Kafka
+
+Add repo:
+
+```bash
+helm repo add azure-marketplace https://marketplace.azurecr.io/helm/v1/repo
+```
+
+Install Kafka:
+
+```bash
+helm install kafka azure-marketplace/kafka
 ```

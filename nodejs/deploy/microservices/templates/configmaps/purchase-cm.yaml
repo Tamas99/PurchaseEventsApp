@@ -4,5 +4,5 @@ metadata:
   name: purchase-configmap
 data:
   DATABASE_URL: 'mongodb://{{ .Values.purchase.db.host }}:{{ .Values.purchase.db.port }}/{{ .Values.purchase.db.database }}?authSource=admin'
-  KAFKA_BOOTSTRAP_SERVERS: '{{ .Values.kafka.host }}:{{ .Values.kafka.port }}'
+  KAFKA_BOOTSTRAP_SERVERS: '{{ .Values.kafka.producer }}'
   TAX_MICROSERVICE_URL: 'http://tax-service:8020'
