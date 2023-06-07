@@ -1,3 +1,4 @@
+import logging
 from typing import List
 
 import requests
@@ -5,9 +6,10 @@ from pymongo.results import InsertOneResult
 
 from fastapi import FastAPI
 
-from ..app import logger
 from ..model.purchase_event import PurchaseEventModel
 from ..repository.purchase_repository import PurchaseRepository
+
+logger = logging.getLogger(__name__)
 
 
 class PurchaseService:
@@ -29,7 +31,8 @@ class PurchaseService:
         fullPrice: float = await self._calculate_full_price(float(purchase_event['price']), tax_value)
         purchase_event['price'] = fullPrice
         saved_purchase_event: InsertOneResult = await self._save(purchase_event)
-        logger.info('Saved purchase event: ' + str(saved_purchase_event.inserted_id))
+        logger.info('Saved purchase event: ' +
+                    str(saved_purchase_event.inserted_id))
         return purchase_event
 
     async def get_all(self) -> List[PurchaseEventModel]:

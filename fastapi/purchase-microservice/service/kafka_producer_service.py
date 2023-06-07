@@ -1,13 +1,15 @@
 import asyncio
+import logging
 
 from aiokafka import AIOKafkaProducer
 from aiokafka.errors import KafkaError, KafkaTimeoutError
 
 from fastapi import FastAPI
 
-from ..app import logger
 from ..model.purchase_event import PurchaseEventModel
 from .serializer import serializer
+
+logger = logging.getLogger(__name__)
 
 
 class KafkaProducerService:
@@ -30,6 +32,7 @@ class KafkaProducerService:
         try:
             await self.producer.send('purchase_events', purchase_event)
         except KafkaTimeoutError:
-            logger.error("Produce timeout... maybe we want to resend data again?")
+            logger.error(
+                "Produce timeout... maybe we want to resend data again?")
         except KafkaError as err:
             logger.error("Some Kafka error on produce: {}".format(err))
