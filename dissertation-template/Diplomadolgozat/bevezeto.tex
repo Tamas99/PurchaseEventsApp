@@ -1,0 +1,39 @@
+%----------------------------------------------------------------------------
+\chapter{Bevezető}%\addcontentsline{toc}{chapter}{Bevezető}
+%----------------------------------------------------------------------------
+
+Ez a fejezet mutatja be a dolgozat témáját, helyezi el a témát a szakterületen. Indokolni kell a témaválasztást, majd utalni a választott téma jelentőségére, az alkalmazott közelítésmódra, és a téma feldolgozásának gyakorlati hasznosságára. A bevezető szerepe, hogy meggyőzze az olvasókat, miért hasznos az elvégzett munka. 
+A bevezető a következő kérdésekre ad választ:
+
+\begin{itemize}
+\item Mi a probléma?
+\item Mit szeretne a szerző elérni?
+\item Mit sikerült megvalósítani?
+\end{itemize}
+
+
+Fontos, hogy a fejezet fogalmazza meg a munka célkitűzéseit, esetleg térjen ki arra is, hogy milyen módszerekkel kívánt a szerző választ kapni a felvetett kérdésekre. 
+
+
+\section{P\'elda fejezet}
+
+
+Felmerülhet bennünk a kérdés, hogy mi is az a differenciálegyenlet és hogy egyáltalán mire jó, vagy hol használhatjuk fel? Röviden összefoglalva a differenciálegyenlet egy olyan egyenlet, amelyben az ismeretlen egy függvény és az egyenlet tartalmazza a függvény valamilyen rendű deriváltját is. Tehát nem ismerjük a konkrét függvényt, csak annak változását különböző időpillanatokban.
+
+Ha jobban belegondolunk a mindennapi életben is rengeteg ilyen esemény, jelenség, folyamat, stb. vesz körül, amit csak megfigyelni tudunk, de nem tudjuk konkrétan leírni matematikai vagy fizikai képletekkel. Itt jönnek képbe a differenciálegyenletek, az előbbiekben elmondottak alapján tökéletesen alakalmasak az ilyen jellegű problémák felírására, modellezésére. Egy egyszerű kis példa az az eset, amikor a sütőből kiveszünk egy forró süteményt és ennek a kihülését szeretnénk valamilyen módon megviszgálni. Ez úgy lehetséges, hogy különböző időpillanatokban megmérjük a sütemény hőmérsékletét és lejegyezzük, majd ezekből az előzetes ismeretekből felállítjuk a differenciálegyenletünket. Miután megvan az egyenletünk (modellünk) már csak meg kell oldani. Mai fejlett világunkban ezt már nem papíron analitikus módszerekkel végezzük, azért sem, mert sok esetben nem is lehetséges kézzel megoldani az egyenleteket, ezért segítségül hívjuk a számítógépet és numerikus szamításokkal próbáljuk megoldani az adott problémát.
+
+A valós életben vannak sokkal bonyolultabb esetek is, amikor nem ilyen egyszerű felírni, megalkotni vagy megoldani a probléma modelljét (figyelembe kell venni számos más környezeti behatást, tényezőt). Emellett nagyon fontos az is, hogy egy adott problémát milyen gyorsan és hatékonyan tudunk megoldani a mai számítógépek és technológiák segítségével. Dolgozatom témájának megválasztásánál is ez a feladat keltette fel leginkább az érdeklődésem, hogy hogyan lehet azokat a bizonyos egyenleteket a leggyorsabban megoldani. Vannak olyan esetek vagy problémák, ahol a gyorsaság és hatékonyság elengedhetetlen. Például egy súlyos betegség vagy természeti katasztrófa előrejelzésénél fontos, hogy a modellünket a lehető leggyorsabban megoldjuk és még időben tudjuk jelezni ha baj van. Ezekben az esetekben nagyon fontos, hogy az adott modellt megoldó szoftverünk milyen technológiákkal és módszerekkel van megvalósítva.
+%\vigyazat
+
+A doldozat további részében ismertetem a differenciálegyenletek numerikus megoldásának elméleti alapjait, majd olyan konkrét modelleket vizsgálunk meg, amelyek esetében fontos az időtényező. Továbbá bemutatom a különbző technológiákkal megvalósított szoftvereket, megvizsgáljuk ezeknek a hatékonyságát külön-külön és egymáshoz képest is. Végül megpróbáljuk megtalálni a megvalósított szoftverek közül azt, amelyik a legjobban teljesít gyorsaság szempontjából a különböző tesztek során. %\vigyazat
+\cite{Knuth}
+
+
+	``Maxwell's equations'' are named for James Clark Maxwell and are as follow:
+\begin{align}             
+	\vec{\nabla} \cdot \vec{E} \quad &=\quad\frac{\rho}{\epsilon_0} &&\text{Gauss's Law} \label{eq:GL}\\      
+	\vec{\nabla} \cdot \vec{B} \quad &=\quad 0 &&\text{Gauss's Law for Magnetism} \label{eq:GLM}\\
+	\vec{\nabla} \times \vec{E} \quad &=\hspace{10pt}-\frac{\partial{\vec{B}}}{\partial{t}} &&\text{Faraday's Law of Induction} \label{eq:FL}\\ 
+	\vec{\nabla} \times \vec{B} \quad &=\quad \mu_0\left( \epsilon_0\frac{\partial{\vec{E}}}{\partial{t}}+\vec{J}\right) &&\text{Ampere's Circuital Law} \label{eq:ACL}
+\end{align}
+Equations (\ref{eq:GL}), (\ref{eq:GLM}), (\ref{eq:FL}), and (\ref{eq:ACL}) are some of the most important in Physics.

@@ -1,0 +1,17 @@
+purchase:
+  image: tamas99/purchase:fastapi-0.1
+  db:
+    host: mongo-purchase-mongodb.default.svc.cluster.local
+    port: "27017"
+    database: purchases
+
+tax:
+  image: tamas99/tax:fastapi-0.1
+  db:
+    host: mongo-tax-mongodb.default.svc.cluster.local
+    port: "27018"
+    database: taxes
+
+kafka:
+  producer: kafka-0.kafka-headless.default.svc.cluster.local:9092
+  consumer: kafka.default.svc.cluster.local:9092
