@@ -5,6 +5,8 @@ import org.springframework.web.client.RestTemplate;
 import purchases.purchasemicroservice.model.PurchaseEvent;
 import purchases.purchasemicroservice.repository.PurchaseRepository;
 import org.springframework.beans.factory.annotation.Value;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -13,15 +15,17 @@ public class PurchaseService {
 
     private final PurchaseRepository purchaseRepository;
     private final RestTemplate restTemplate;
-    private final String taxCalculatorUrl;
+    private final String taxMicroserviceUrl;
+    private static final Logger logger = LoggerFactory.getLogger(PurchaseService.class);
 
-    public PurchaseService(PurchaseRepository purchaseRepository, RestTemplate restTemplate, @Value("${tax.calculator.url:http://localhost:8020}") String taxCalculatorUrl) {
+    public PurchaseService(PurchaseRepository purchaseRepository, RestTemplate restTemplate, @Value("${tax.microservice.url:http://localhost:8020}") String taxMicroserviceUrl) {
         this.purchaseRepository = purchaseRepository;
         this.restTemplate = restTemplate;
-        this.taxCalculatorUrl = taxCalculatorUrl;
+        this.taxMicroserviceUrl = taxMicroserviceUrl;
+
     }
 
-    public PurchaseEvent save(PurchaseEvent purchaseEvent) {
+    private PurchaseEvent save(PurchaseEvent purchaseEvent) {
         return purchaseRepository.save(purchaseEvent);
     }
 
@@ -29,22 +33,25 @@ public class PurchaseService {
         return purchaseRepository.findAll();
     }
 
-    public PurchaseEvent get(String id) {
-        return purchaseRepository.findById(id).orElseThrow(() -> new RuntimeException("PurchaseEvent not found"));
-    }
-
-    public void delete() {
+    public void deleteAll() {
         purchaseRepository.deleteAll();
     }
 
-    public Float getTaxValue(String pole) {
-        return restTemplate.getForObject(taxCalculatorUrl + "/tax/" + pole, Float.class);
+    private Float getTaxValue(String region) {
+        return restTemplate.getForObject(taxMicroserviceUrl + "/tax/" + region, Float.class);
     }
 
-    public Float calculateFullPrice(PurchaseEvent purchaseEvent) {
-        Float currentTax = getTaxValue(purchaseEvent.getPole());
-        float basePrice = Float.parseFloat(purchaseEvent.getPrice());
-        return basePrice + (basePrice * currentTax)/100;
+    private float calculateFullPrice(float housePrice, float tax) {
+        return housePrice + (housePrice * tax)/100;
+    }
+
+    public PurchaseEvent processEvent(PurchaseEvent purchaseEvent) {
+        float taxValue = getTaxValue(purchaseEvent.getRegion());
+        float fullPrice = calculateFullPrice(Float.parseFloat(purchaseEvent.getPrice()), taxValue);
+        purchaseEvent.setPrice(Float.toString(fullPrice));
+        PurchaseEvent savedPurchaseEvent = save(purchaseEvent);
+        logger.info("Saved purchase event: " + savedPurchaseEvent.toString());
+        return purchaseEvent;
     }
 }
 

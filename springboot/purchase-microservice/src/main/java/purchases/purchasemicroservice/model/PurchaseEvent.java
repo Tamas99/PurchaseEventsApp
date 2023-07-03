@@ -31,9 +31,9 @@ public class PurchaseEvent implements Serializable {
 
     private String bathrooms;
 
-    private String pole;
+    private String region;
 
-    public PurchaseEvent(String id, String index, String name, String gender, String email, String phone, String dateOfBirth, String houseNumber, String price, String sqFt, String bedrooms, String bathrooms, String pole) {
+    public PurchaseEvent(String id, String index, String name, String gender, String email, String phone, String dateOfBirth, String houseNumber, String price, String sqFt, String bedrooms, String bathrooms, String region) {
         this.id = id;
         this.index = index;
         this.name = name;
@@ -46,7 +46,7 @@ public class PurchaseEvent implements Serializable {
         this.sqFt = sqFt;
         this.bedrooms = bedrooms;
         this.bathrooms = bathrooms;
-        this.pole = pole;
+        this.region = region;
     }
 
     public PurchaseEvent() {
@@ -148,11 +148,11 @@ public class PurchaseEvent implements Serializable {
         this.bathrooms = bathrooms;
     }
 
-    public String getPole() {
-        return pole;
+    public String getRegion() {
+        return region;
     }
 
-    public void setPole(String pole) {
-        this.pole = pole;
+    public void setRegion(String region) {
+        this.region = region;
     }
 }

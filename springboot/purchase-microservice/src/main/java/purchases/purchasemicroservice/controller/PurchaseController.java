@@ -20,19 +20,18 @@ public class PurchaseController {
 
     @PostMapping
     public PurchaseEvent create(@RequestBody PurchaseEvent purchaseEvent) {
-        Float fullPrice = purchaseService.calculateFullPrice(purchaseEvent);
-        purchaseEvent.setPrice(fullPrice.toString());
-        kafkaProducerService.sendPurchase(purchaseEvent);
-        return purchaseService.save(purchaseEvent);
+        PurchaseEvent processedPurchaseEvent = purchaseService.processEvent(purchaseEvent);
+        kafkaProducerService.sendPurchase(processedPurchaseEvent);
+        return processedPurchaseEvent;
     }
 
     @GetMapping
-    public List<PurchaseEvent> read() {
+    public List<PurchaseEvent> readAll() {
         return purchaseService.getAll();
     }
 
     @DeleteMapping
-    public void delete() {
-        purchaseService.delete();
+    public void deleteAll() {
+        purchaseService.deleteAll();
     }
 }

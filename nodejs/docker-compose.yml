@@ -12,13 +12,8 @@ services:
       ZOOKEEPER_SERVER_ID: 1
       ZOOKEEPER_SERVERS: zoo1:2888:3888
     deploy:
-      resources:
-        limits:
-          cpus: "0.5"
-          memory: 512M
       restart_policy:
         condition: on-failure
-
   kafka:
     image: confluentinc/cp-kafka:7.3.2
     hostname: kafka
@@ -45,10 +40,6 @@ services:
       KAFKA_HOST_NAME: 0.0.0.0
       KAFKA_ADVERTISED_HOST_NAME: kafka:9092
     deploy:
-      resources:
-        limits:
-          cpus: "0.5"
-          memory: 512M
       restart_policy:
         condition: on-failure
     depends_on:
@@ -59,231 +50,33 @@ services:
       interval: 5s
       timeout: 10s
       retries: 10
-  # redis:
-  #   image: redis/redis-stack:latest
-  #   ports:
-  #     - 6379:6379
-  #     - 8001:8001
-  #   volumes:
-  #     - redis-storage:/data:rw
-  #   healthcheck:
-  #     test: ["CMD", "redis-cli", "ping"]
-  #     interval: 1s
-  #     timeout: 3s
-  #     retries: 30
-  # authorization:
-  #   build:
-  #     context: authorizationservice
-  #   image: authorization-image
-  #   container_name: authorization
-  #   ports:
-  #     - 8000:8000
-  #   environment:
-  #     KAFKA_BOOTSTRAP_SERVERS: kafka:9092
-  #   depends_on:
-  #     redis:
-  #       condition: service_healthy
-  #     kafka:
-  #       condition: service_healthy
-  # weather:
-  #   build:
-  #     context: weatherservice
-  #   image: weather-image
-  #   container_name: weather
-  #   ports:
-  #     - 8010:8010
-  #   environment:
-  #     KAFKA_BOOTSTRAP_SERVERS: kafka:9092
-  #     REDIS_HOST: redis
-  #     REDIS_PORT: 6379
-  #   depends_on:
-  #     redis:
-  #       condition: service_healthy
-  #     kafka:
-  #       condition: service_healthy
-  # locust-master:
-  #   build:
-  #     context: locust
-  #   image: locust-image
-  #   # or use the pre-built image
-  #   # image: aakindele/distributed_perf_testing.my-locust:latest
-  #   ports:
-  #   - "3000:3000"
-  #   command: --master --host http://weather:8010 --web-port 3000
-  #   environment:
-  #     - ELASTICSEARCH_HOST=elasticsearch
-  #   depends_on:
-  #     elasticsearch:
-  #       condition: service_healthy
-  # locust-worker:
-  #   build:
-  #     context: locust
-  #   image: locust-image
-  #   # or use the pre-built image
-  #   # image: aakindele/distributed_perf_testing.my-locust:latest
-  #   command: --worker --master-host locust-master
-  #   environment:
-  #     - ELASTICSEARCH_HOST=http://elasticsearch:9200
-  #   depends_on:
-  #     elasticsearch:
-  #       condition: service_healthy
-  # elasticsearch:
-  #   image: docker.elastic.co/elasticsearch/elasticsearch:7.17.0
-  #   environment:
-  #     - discovery.type=single-node
-  #   volumes:
-  #     - elastic-storage:/usr/share/elasticsearch/data
-  #   ports:
-  #     - "9200:9200"
-  #     - "9300:9300"
-  #   mem_limit: 1073741824
-  #   ulimits:
-  #     memlock:
-  #       soft: -1
-  #       hard: -1
-  #   healthcheck:
-  #     test: curl -s http://elasticsearch:9200 >/dev/null || exit 1
-  #     interval: 30s
-  #     timeout: 10s
-  #     retries: 10
-  #     # test: [ "CMD", "curl",  "--fail" , "http://elasticsearch:9200/_cluster/health?wait_for_status=green&timeout=5s", "||", "exit", "1" ]
-  #     # interval: 15s
-  #     # timeout: 5s
-  #     # retries: 10
-  # kibana:
-  #   image: docker.elastic.co/kibana/kibana:7.17.0
-  #   ports:
-  #     - "5601:5601"
   purchase-microservice:
     build:
       context: purchase-microservice
-    image: purchase-microservice-image
+    image: tamas99/purchase:nodejs-0.1
     container_name: purchase-microservice
     ports:
       - 8010:8010
     environment:
+      DATABASE_URL: mongodb+srv://Tamas99:<password>@microservicedb.cvc50.mongodb.net/purchases?retryWrites=true&w=majority
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
       TAX_MICROSERVICE_URL: http://tax-microservice:8020
     depends_on:
-#      mongo:
-#        condition: service_started
       kafka:
         condition: service_healthy
   tax-microservice:
     build:
       context: tax-microservice
-    image: tax-microservice-image
+    image: tamas99/tax:nodejs-0.1
     container_name: tax-microservice
     ports:
       - 8020:8020
     environment:
-      KAFKA_BOOTSTRAP_SERVERS: "kafka:9092"
+      DATABASE_URL: mongodb+srv://Tamas99:<password>@microservicedb.cvc50.mongodb.net/taxes?retryWrites=true&w=majority
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
     depends_on:
-#      mongo-taxes:
-#        condition: service_started
       kafka:
         condition: service_healthy
-#  mongo:
-#    image: mongo:latest
-#    container_name: mongo
-#    environment:
-#      MONGO_INITDB_ROOT_USERNAME: admin
-#      MONGO_INITDB_ROOT_PASSWORD: admin
-#      MONGO_INITDB_DATABASE: purchase
-#    healthcheck:
-#      test: echo 'db.stats().ok' | mongo localhost:27017/test --quiet
-#      interval: 10s
-#      timeout: 10s
-#      retries: 5
-#      start_period: 40s
-#    volumes:
-#      - mongo-storage:/data/db
-#    ports:
-#      - '27017:27017'
-#    deploy:
-#      resources:
-#        limits:
-#          cpus: "0.5"
-#          memory: 512M
-#  mongo-taxes:
-#    image: mongo:latest
-#    container_name: mongo-taxes
-#    environment:
-#      MONGO_INITDB_ROOT_USERNAME: admin
-#      MONGO_INITDB_ROOT_PASSWORD: admin
-#      MONGO_INITDB_DATABASE: taxes
-#    volumes:
-#      - mongo-taxes-storage:/data/db
-#    ports:
-#      - '27018:27017'
-#    deploy:
-#      resources:
-#        limits:
-#          cpus: "0.5"
-#          memory: 512M
-#  elasticsearch:
-#    image: docker.elastic.co/elasticsearch/elasticsearch:8.7.0
-#    #stdin_open: true # docker run -i
-#    #tty: true        # docker run -t
-#    container_name: elasticsearch
-#    environment:
-#      - node.name=elasticsearch
-#      - cluster.name=es-cluster
-#      - discovery.type=single-node
-#      # - "ES_JAVA_OPTS=-Xms128m -Xmx128m"
-#      - xpack.security.enabled=false
-#    ulimits:
-#      memlock:
-#        soft: -1
-#        hard: -1
-#    healthcheck:
-#      test: curl -s http://elasticsearch:9200/_cluster/health?wait_for_status=green&timeout=1s || exit 1
-#      interval: 30s
-#      timeout: 10s
-#      retries: 10
-#    volumes:
-#      - es-data01:/usr/share/elasticsearch/data
-#    ports:
-#      - 9200:9200
-#    networks:
-#      - es-network
-#
-#  kibana:
-#    image: docker.elastic.co/kibana/kibana:8.7.0
-#    environment:
-#      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
-#    ports:
-#      - 5601:5601
-#    networks:
-#      - es-network
-#    depends_on:
-#      - elasticsearch
-#
-#  metricbeat:
-#    build: ElasticStack/metricbeats
-#    image: metricbeat_deployment:0.1.0
-#    container_name: metricbeat
-#    environment:
-#      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
-#    volumes:
-#      - metricbeat-data01:/usr/share/metricbeat/data
-#    networks:
-#      - es-network
-#    depends_on:
-#      elasticsearch:
-#        condition: service_healthy
 
 volumes:
-#  mongo-storage:
-#  mongo-taxes-storage:
   kafka-storage:
-  # redis-storage:
-  # elastic-storage:
-#  es-data01:
-#    driver: local
-#  metricbeat-data01:
-#    driver: local
-
-#networks:
-#  es-network:
-#    driver: bridge
